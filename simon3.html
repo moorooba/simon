@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gameboard {
+        border: 2px solid black;
+        width: 300px;
+        height: 260px;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: black;
+        border-radius: 5%;
+        position: relative;
+      }
+      .polen {
+        position: absolute;
+        border: 3px solid black;
+        border-radius: 50%;
+        background-color: blueviolet;
+        width: 75px;
+        height: 75px;
+        top: calc(0% - 50px);
+        left: calc(-20% - 200px);
+        z-index: 2;
+      }
+
+      .box {
+        box-sizing: border-box;
+        z-index: 0;
+        height: 50%;
+        width: 50%;
+        border: 1px solid black;
+        display: flex;
+        margin: 0;
+        border-radius: 5%;
+      }
+      .uno {
+        background-color: rgba(0, 0, 223, 0.767);
+        position: relative;
+      }
+
+      .uno.light {
+        background-color: rgba(129, 129, 252, 0.767);
+      }
+
+      .dos {
+        background-color: rgb(49, 122, 55);
+      }
+      .dos.light {
+        background-color: rgb(102, 126, 104);
+      }
+
+      .tres {
+        background-color: rgb(198, 209, 43);
+        position: relative;
+      }
+
+      .tres.light {
+        background-color: rgb(209, 212, 156);
+      }
+
+      .cuatro {
+        background-color: rgb(177, 12, 12);
+      }
+
+      .cuatro.light {
+        background-color: rgb(196, 111, 111);
+      }
+
+      .petado {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        background-color: rgb(252, 255, 55);
+        display: flex;
+        align-self: flex-end;
+        border-top-left-radius: 60%;
+        border-bottom-right-radius: 50%;
+        z-index: 1;
+      }
+
+      .petado.light {
+        background-color: rgb(252, 253, 201);
+      }
+
+      .petado.dark {
+        background-color: rgb(195, 197, 48);
+      }
+
+      .petaun {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        display: flex;
+        border-bottom-left-radius: 50%;
+        border-top-right-radius: 60%;
+        margin-bottom: 0;
+        margin-left: 0;
+        background-color: rgb(255, 0, 0);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      .petaun.light {
+        background-color: rgb(255, 129, 129);
+      }
+
+      .petaun.dark {
+        background-color: rgb(177, 0, 0);
+      }
+
+      .petatre {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        display: flex;
+        position: absolute;
+        right: 0;
+        background-color: rgb(79, 255, 88);
+        border-bottom-right-radius: 60%;
+        border-top-left-radius: 50%;
+      }
+
+      .petatre.light {
+        background-color: rgb(215, 253, 217);
+      }
+
+      .petatre.dark {
+        background-color: rgb(65, 190, 71);
+      }
+
+      .petacua {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        display: flex;
+        background-color: blue;
+        border-bottom-left-radius: 60%;
+        border-top-right-radius: 50%;
+      }
+
+      .petacua.light {
+        background-color: rgb(138, 138, 255);
+      }
+
+      .petacua.dark {
+        background-color: rgb(0, 0, 211);
+      }
+
+      .polen {
+        position: absolute;
+        border: 10px solid black;
+        border-radius: 50%;
+        background-color: rgb(255, 255, 255);
+        width: 45px;
+        height: 45px;
+        top: calc(50% - 33px);
+
+        left: calc(50% - 33px);
+      }
+
+      .polen.light {
+        background-color: rgb(133, 127, 127);
+      }
+
+      .polen.dark {
+        background-color: rgb(207, 205, 205);
+      }
+
+      .boton {
+        position: absolute;
+        border: 5px solid rgb(255, 255, 255);
+        color: aliceblue;
+        border-radius: 50%;
+        background-color: rgb(27, 26, 26);
+        width: 60px;
+        height: 60px;
+        top: calc(50% - 31px);
+
+        left: calc(50% - 30px);
+        z-index: 4;
+        font-size: 10px;
+        overflow: hidden;
+        text-align: right;
+      }
+
+      .boton.hide {
+        display: none;
+      }
+
+      .boton:hover {
+        border: 0.01px solid rgb(10, 10, 10);
+
+        color: black;
+
+        transition: 0.3s border ease-in 0.1s;
+      }
+      .boton:focus {
+        outline: 0;
+      }
+
+      .resultado {
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        border-radius: 5%;
+        color: white;
+        font-size: 55px;
+        background-color: black;
+        font-family: monospace;
+        text-align: center;
+        position: absolute;
+      }
+
+      .resultados {
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        border-radius: 5%;
+        color: white;
+        font-size: 55px;
+        background-color: black;
+        font-family: monospace;
+        text-align: center;
+        position: absolute;
+      }
+
+      .resultado.hide {
+        display: none;
+      }
+
+      .resultados.hide {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gameboard">
+      <div class="box uno" id="box1" data-color="box1">
+        <div id="rojo" class="petaun" data-color="rojo"></div>
+      </div>
+      <div class="box dos" id="box2" data-color="box2">
+        <div id="amarillo" class="petado" data-color="amarillo"></div>
+      </div>
+      <div class="box tres" id="box3" data-color="box3">
+        <div id="verde" class="petatre" data-color="verde"></div>
+      </div>
+      <div class="box cuatro" id="box4" data-color="box4">
+        <div id="azul" class="petacua" data-color="azul"></div>
+      </div>
+      <div id="blanco" class="polen" data-color="blanco"></div>
+      <button id="btnEmpezar" class="boton" onclick="hideButton()">
+        Empezar!
+      </button>
+
+      <div id="winner" class="resultado hide"><p>Ganaste! :)</p></div>
+      <div id="loser" class="resultados hide">
+        <p>
+          :( <br />
+          Perdiste!
+        </p>
+      </div>
+    </div>
+
+    <audio src="./notas/nota1.mp3" id="audio1" preload="metadata"></audio>
+    <audio src="./notas/nota2.mp3" id="audio2" preload="metadata"></audio>
+    <audio src="./notas/nota3.mp3" id="audio3" preload="metadata"></audio>
+    <audio src="./notas/nota4.mp3" id="audio4" preload="metadata"></audio>
+
+    <audio src="./notas/nota5.mp3" id="audio5" preload="metadata"></audio>
+    <audio src="./notas/nota6.mp3" id="audio6" preload="metadata"></audio>
+    <audio src="./notas/nota7.mp3" id="audio7" preload="metadata"></audio>
+    <audio src="./notas/nota8.mp3" id="audio8" preload="metadata"></audio>
+    <audio src="./notas/nota9.mp3" id="audio9" preload="metadata"></audio>
+
+    <script>
+      const boton = document.getElementById("btnEmpezar");
+
+      const verde = document.getElementById("verde");
+      const amarillo = document.getElementById("amarillo");
+      const azul = document.getElementById("azul");
+      const rojo = document.getElementById("rojo");
+      const blanco = document.getElementById("blanco");
+
+      const box1 = document.getElementById("box1");
+      const box2 = document.getElementById("box2");
+      const box3 = document.getElementById("box3");
+      const box4 = document.getElementById("box4");
+
+      const loser = document.getElementById("loser");
+      const winner = document.getElementById("winner");
+
+      class Juego {
+        constructor() {}
+      }
+
+      let level = 0;
+      const ULTIMO_NIVEL = 5;
+      let subnivel = 0;
+      const colores = {
+        verde,
+        amarillo,
+        azul,
+        rojo,
+        blanco,
+        box1,
+        box2,
+        box3,
+        box4,
+      };
+      let timeoutIluminacion = null;
+
+      let secuencia = new Array(10)
+        .fill(0)
+        .map((n) => Math.floor(Math.random() * 9));
+
+      function generarSecuencia() {
+        secuencia = new Array(10)
+          .fill(0)
+          .map((n) => Math.floor(Math.random() * 9));
+      }
+
+      const nota1 = document.getElementById("audio1");
+      const nota2 = document.getElementById("audio2");
+      const nota3 = document.getElementById("audio3");
+      const nota4 = document.getElementById("audio4");
+      const nota5 = document.getElementById("audio5");
+      const nota6 = document.getElementById("audio6");
+      const nota7 = document.getElementById("audio7");
+      const nota8 = document.getElementById("audio8");
+      const nota9 = document.getElementById("audio9");
+
+      function tocarNota(color) {
+        switch (color) {
+          case "rojo":
+            return nota1.play();
+          case "verde":
+            return nota1.play();
+          case "amarillo":
+            return nota2.play();
+          case "azul":
+            return nota3.play();
+          case "blanco":
+            return nota5.play();
+          case "box1":
+            return nota6.play();
+          case "box2":
+            return nota7.play();
+          case "box3":
+            return nota8.play();
+          case "box4":
+            return nota9.play();
+        }
+      }
+
+      function hideButton() {
+        boton.classList.add("hide");
+
+        setTimeout(iluminarSecuencia, 500);
+      }
+
+      function iluminarSecuencia() {
+        for (let i = 0; i <= level; i++) {
+          const color = transformarNumeroAColor(secuencia[i]);
+          setTimeout(() => iluminarColor(color), 1400 * i);
+        }
+        agregarEventosClick();
+      }
+
+      function iluminarColor(color) {
+        colores[color].classList.add("light");
+        /*tocarNota(color)*/
+        setTimeout(() => this.apagarColor(color), 350);
+      }
+
+      function apagarColor(color) {
+        colores[color].classList.remove("light");
+      }
+
+      function transformarNumeroAColor(numero) {
+        switch (numero) {
+          case 0:
+            return "rojo";
+          case 1:
+            return "verde";
+          case 2:
+            return "amarillo";
+          case 3:
+            return "azul";
+          case 4:
+            return "blanco";
+          case 5:
+            return "box1";
+          case 6:
+            return "box2";
+          case 7:
+            return "box3";
+          case 8:
+            return "box4";
+        }
+      }
+
+      function transformarColorANumero(color) {
+        switch (color) {
+          case "rojo":
+            return 0;
+          case "verde":
+            return 1;
+          case "amarillo":
+            return 2;
+          case "azul":
+            return 3;
+          case "blanco":
+            return 4;
+
+          case "box1":
+            return 5;
+          case "box2":
+            return 6;
+          case "box3":
+            return 7;
+          case "box4":
+            return 8;
+        }
+      }
+
+      function agregarEventosClick() {
+        colores.verde.addEventListener("click", this.elegirColor);
+        colores.amarillo.addEventListener("click", this.elegirColor);
+        colores.rojo.addEventListener("click", this.elegirColor);
+        colores.azul.addEventListener("click", this.elegirColor);
+        colores.blanco.addEventListener("click", this.elegirColor);
+
+        colores.box1.addEventListener("click", this.elegirColor);
+        colores.box2.addEventListener("click", this.elegirColor);
+        colores.box3.addEventListener("click", this.elegirColor);
+        colores.box4.addEventListener("click", this.elegirColor);
+      }
+
+      function eliminarEventosClick() {
+        colores.verde.removeEventListener("click", this.elegirColor);
+        colores.amarillo.removeEventListener("click", this.elegirColor);
+        colores.rojo.removeEventListener("click", this.elegirColor);
+        colores.azul.removeEventListener("click", this.elegirColor);
+        colores.blanco.removeEventListener("click", this.elegirColor);
+
+        colores.box1.removeEventListener("click", this.elegirColor);
+        colores.box2.removeEventListener("click", this.elegirColor);
+        colores.box3.removeEventListener("click", this.elegirColor);
+        colores.box4.removeEventListener("click", this.elegirColor);
+      }
+
+      function elegirColor(ev) {
+        const nombreColor = ev.target.dataset.color;
+        const numeroColor = transformarColorANumero(nombreColor);
+        iluminarColor(nombreColor);
+
+        if (numeroColor === secuencia[subnivel]) {
+          console.log("num de array ahora " + secuencia[subnivel]);
+          console.log(numeroColor + " eleccion");
+          console.log("combinatoria " + numeroColor + secuencia[subnivel]);
+          subnivel++;
+
+          if (subnivel === level) {
+            eliminarEventosClick();
+            level++;
+            subnivel = 0;
+
+            if (level === ULTIMO_NIVEL + 1) {
+              eliminarEventosClick();
+              setTimeout(secuenciaFinal, 700);
+              clearTimeout(timeoutIluminacion);
+            } else {
+              timeoutIluminacion = setTimeout(iluminarSecuencia, 1500);
+            }
+          }
+        } else {
+          /*  console.log("se diaparo");
+          console.log("sublvl: " + subnivel);
+          console.log("elegi " + numeroColor);
+          console.log("num de array " + secuencia[subnivel]);
+          console.log(secuencia);
+          console.log(ev); */
+          console.log(numeroColor === secuencia[subnivel]);
+          eliminarEventosClick();
+          setTimeout(perdioJuego, 700);
+        }
+      }
+
+      function ganoJuego() {
+        winner.classList.remove("hide");
+
+        setTimeout(start, 1000);
+      }
+
+      function start() {
+        winner.classList.add("hide");
+        boton.classList.remove("hide");
+        level = 0;
+        generarSecuencia();
+      }
+
+      function perdioJuego() {
+        loser.classList.remove("hide");
+        setTimeout(startos, 1000);
+      }
+
+      function startos() {
+        loser.classList.add("hide");
+        boton.classList.remove("hide");
+        level = 0;
+        subnivel = 0;
+        generarSecuencia();
+      }
+
+      function secuenciaFinal() {
+        eliminarEventosClick();
+        for (let i = 0; i < 4; i++) {
+          setTimeout(iluminarSecuenciaFinal, 1000 * i);
+        }
+
+        setTimeout(ganoJuego, 4000);
+      }
+
+      function iluminarSecuenciaFinal() {
+        colores.amarillo.classList.add("light");
+        colores.verde.classList.add("light");
+        colores.rojo.classList.add("light");
+        colores.azul.classList.add("light");
+
+        setTimeout(apagarSecuenciaFinal, 500);
+      }
+
+      function apagarSecuenciaFinal() {
+        colores.amarillo.classList.remove("light");
+        colores.rojo.classList.remove("light");
+        colores.verde.classList.remove("light");
+        colores.azul.classList.remove("light");
+
+        iluminarSecuenciaFinal2();
+      }
+
+      function iluminarSecuenciaFinal2() {
+        colores.box1.classList.add("light");
+        colores.box2.classList.add("light");
+        colores.box3.classList.add("light");
+        colores.box4.classList.add("light");
+        setTimeout(apagarSecuenciaFinal2, 500);
+      }
+
+      function apagarSecuenciaFinal2() {
+        colores.box1.classList.remove("light");
+        colores.box2.classList.remove("light");
+        colores.box3.classList.remove("light");
+        colores.box4.classList.remove("light");
+      }
+    </script>
+  </body>
+</html>
