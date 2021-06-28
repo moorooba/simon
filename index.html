@@ -321,6 +321,10 @@
             amarillo,
             rojo,
             verde,
+            marino,
+            mostaza,
+            tinto,
+            sapo,
           };
         }
 
@@ -447,34 +451,49 @@
           console.log("diparo");
           this.eliminarEventosClick();
           for (let i = 0; i < 4; i++) {
-            setTimeout(this.iluminarSecuenciaFinal, 1000 * i);
+            // setTimeout(this.iluminarSecuenciaFinal, 1000 * i);
+            setTimeout(() => {
+              this.iluminarSecuenciaFinal();
+            }, 1000 * i);
           }
-          setTimeout(this.ganoJuego, 4000);
+          // setTimeout(this.ganoJuego, 4000);
+          setTimeout(() => {
+            this.ganoJuego();
+          }, 4000);
         }
 
         ganoJuego() {
-          console.log("diparo3");
+          console.log("ganojuego");
           winner.classList.remove("hide");
 
-          setTimeout(this.restart, 1500);
+          // setTimeout(this.restart, 1500);
+
+          setTimeout(() => {
+            this.restart();
+          }, 1500);
         }
 
         restart() {
+          console.log("restart");
           winner.classList.add("hide");
           boton.classList.remove("hide");
         }
 
         iluminarSecuenciaFinal() {
-          console.log("diparo2");
+          console.log("iluminaf");
           this.colores.amarillo.classList.add("light");
           this.colores.verde.classList.add("light");
           this.colores.rojo.classList.add("light");
           this.colores.azul.classList.add("light");
 
-          setTimeout(this.apagarSecuenciaFinal, 500);
+          //setTimeout(this.apagarSecuenciaFinal, 500);
+          setTimeout(() => {
+            this.apagarSecuenciaFinal();
+          }, 500);
         }
 
         apagarSecuenciaFinal() {
+          console.log("iluminaf2");
           this.colores.amarillo.classList.remove("light");
           this.colores.rojo.classList.remove("light");
           this.colores.verde.classList.remove("light");
@@ -484,18 +503,21 @@
         }
 
         iluminarSecuenciaFinal2() {
-          this.colores.box1.classList.add("light");
-          this.colores.box2.classList.add("light");
-          this.colores.box3.classList.add("light");
-          this.colores.box4.classList.add("light");
-          setTimeout(this.apagarSecuenciaFinal2, 500);
+          this.colores.marino.classList.add("light");
+          this.colores.sapo.classList.add("light");
+          this.colores.mostaza.classList.add("light");
+          this.colores.tinto.classList.add("light");
+          // setTimeout(this.apagarSecuenciaFinal2, 500);
+          setTimeout(() => {
+            this.apagarSecuenciaFinal2();
+          }, 500);
         }
 
         apagarSecuenciaFinal2() {
-          this.colores.box1.classList.remove("light");
-          this.colores.box2.classList.remove("light");
-          this.colores.box3.classList.remove("light");
-          this.colores.box4.classList.remove("light");
+          this.colores.marino.classList.remove("light");
+          this.colores.sapo.classList.remove("light");
+          this.colores.mostaza.classList.remove("light");
+          this.colores.tinto.classList.remove("light");
         }
       }
 
