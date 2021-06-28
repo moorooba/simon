@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .gameboard {
+        border: 2px solid black;
+        width: 300px;
+        height: 260px;
+        display: flex;
+        flex-wrap: wrap;
+        background-color: black;
+        border-radius: 5%;
+        position: relative;
+      }
+      .polen {
+        position: absolute;
+        border: 3px solid black;
+        border-radius: 50%;
+        background-color: blueviolet;
+        width: 75px;
+        height: 75px;
+        top: calc(0% - 50px);
+        left: calc(-20% - 200px);
+        z-index: 2;
+      }
+
+      .box {
+        box-sizing: border-box;
+        z-index: 0;
+        height: 50%;
+        width: 50%;
+        border: 1px solid black;
+        display: flex;
+        margin: 0;
+        border-radius: 5%;
+      }
+      .uno {
+        background-color: rgba(0, 0, 223, 0.767);
+        position: relative;
+      }
+
+      .uno.light {
+        background-color: rgba(129, 129, 252, 0.767);
+      }
+
+      .dos {
+        background-color: rgb(49, 122, 55);
+      }
+      .dos.light {
+        background-color: rgb(102, 126, 104);
+      }
+
+      .tres {
+        background-color: rgb(198, 209, 43);
+        position: relative;
+      }
+
+      .tres.light {
+        background-color: rgb(209, 212, 156);
+      }
+
+      .cuatro {
+        background-color: rgb(177, 12, 12);
+      }
+
+      .cuatro.light {
+        background-color: rgb(196, 111, 111);
+      }
+
+      .petado {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        background-color: rgb(252, 255, 55);
+        display: flex;
+        align-self: flex-end;
+        border-top-left-radius: 60%;
+        border-bottom-right-radius: 50%;
+        z-index: 1;
+      }
+
+      .petado.light {
+        background-color: rgb(252, 253, 201);
+      }
+
+      .petado.dark {
+        background-color: rgb(195, 197, 48);
+      }
+
+      .petaun {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        display: flex;
+        border-bottom-left-radius: 50%;
+        border-top-right-radius: 60%;
+        margin-bottom: 0;
+        margin-left: 0;
+        background-color: rgb(255, 0, 0);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      .petaun.light {
+        background-color: rgb(255, 129, 129);
+      }
+
+      .petaun.dark {
+        background-color: rgb(177, 0, 0);
+      }
+
+      .petatre {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        display: flex;
+        position: absolute;
+        right: 0;
+        background-color: rgb(79, 255, 88);
+        border-bottom-right-radius: 60%;
+        border-top-left-radius: 50%;
+      }
+
+      .petatre.light {
+        background-color: rgb(215, 253, 217);
+      }
+
+      .petatre.dark {
+        background-color: rgb(65, 190, 71);
+      }
+
+      .petacua {
+        width: 130px;
+        height: 100px;
+        border: 3px solid black;
+        display: flex;
+        background-color: blue;
+        border-bottom-left-radius: 60%;
+        border-top-right-radius: 50%;
+      }
+
+      .petacua.light {
+        background-color: rgb(138, 138, 255);
+      }
+
+      .petacua.dark {
+        background-color: rgb(0, 0, 211);
+      }
+
+      .polen {
+        position: absolute;
+        border: 10px solid black;
+        border-radius: 50%;
+        background-color: rgb(255, 255, 255);
+        width: 45px;
+        height: 45px;
+        top: calc(50% - 33px);
+
+        left: calc(50% - 33px);
+      }
+
+      .polen.light {
+        background-color: rgb(133, 127, 127);
+      }
+
+      .polen.dark {
+        background-color: rgb(207, 205, 205);
+      }
+
+      .boton {
+        position: absolute;
+        border: 5px solid rgb(255, 255, 255);
+        color: aliceblue;
+        border-radius: 50%;
+        background-color: rgb(27, 26, 26);
+        width: 60px;
+        height: 60px;
+        top: calc(50% - 31px);
+
+        left: calc(50% - 30px);
+        z-index: 4;
+        font-size: 10px;
+        overflow: hidden;
+        text-align: right;
+      }
+
+      .boton.hide {
+        display: none;
+      }
+
+      .boton:hover {
+        border: 0.01px solid rgb(10, 10, 10);
+
+        color: black;
+
+        transition: 0.3s border ease-in 0.1s;
+      }
+      .boton:focus {
+        outline: 0;
+      }
+
+      .resultado {
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        border-radius: 5%;
+        color: white;
+        font-size: 55px;
+        background-color: black;
+        font-family: monospace;
+        text-align: center;
+        position: absolute;
+      }
+
+      .resultados {
+        height: 100%;
+        width: 100%;
+        z-index: 2;
+        border-radius: 5%;
+        color: white;
+        font-size: 55px;
+        background-color: black;
+        font-family: monospace;
+        text-align: center;
+        position: absolute;
+      }
+
+      .resultado.hide {
+        display: none;
+      }
+
+      .resultados.hide {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gameboard">
+      <div class="box uno" id="marino" data-color="marino">
+        <div id="rojo" class="petaun" data-color="rojo"></div>
+      </div>
+      <div class="box dos" id="sapo" data-color="sapo">
+        <div id="amarillo" class="petado" data-color="amarillo"></div>
+      </div>
+      <div class="box tres" id="mostaza" data-color="mostaza">
+        <div id="verde" class="petatre" data-color="verde"></div>
+      </div>
+      <div class="box cuatro" id="tinto" data-color="tinto">
+        <div id="azul" class="petacua" data-color="azul"></div>
+      </div>
+      <div id="blanco" class="polen" data-color="blanco"></div>
+      <button id="btnEmpezar" class="boton" onclick="empezarJuego()">
+        Empezar!
+      </button>
+
+      <div id="winner" class="resultado hide"><p>Ganaste! :)</p></div>
+      <div id="loser" class="resultados hide">
+        <p>
+          :( <br />
+          Perdiste!
+        </p>
+      </div>
+    </div>
+
+    <audio src="./notas/nota1.mp3" id="audio1" preload="metadata"></audio>
+    <audio src="./notas/nota2.mp3" id="audio2" preload="metadata"></audio>
+    <audio src="./notas/nota3.mp3" id="audio3" preload="metadata"></audio>
+    <audio src="./notas/nota4.mp3" id="audio4" preload="metadata"></audio>
+
+    <audio src="./notas/nota5.mp3" id="audio5" preload="metadata"></audio>
+    <audio src="./notas/nota6.mp3" id="audio6" preload="metadata"></audio>
+    <audio src="./notas/nota7.mp3" id="audio7" preload="metadata"></audio>
+    <audio src="./notas/nota8.mp3" id="audio8" preload="metadata"></audio>
+    <audio src="./notas/nota9.mp3" id="audio9" preload="metadata"></audio>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+    <script>
+      const boton = document.getElementById("btnEmpezar");
+
+      const verde = document.getElementById("verde");
+      const amarillo = document.getElementById("amarillo");
+      const azul = document.getElementById("azul");
+      const rojo = document.getElementById("rojo");
+      const blanco = document.getElementById("blanco");
+      const ULTIMO_NIVEL = 2;
+
+      const marino = document.getElementById("marino");
+      const sapo = document.getElementById("sapo");
+      const mostaza = document.getElementById("mostaza");
+      const tinto = document.getElementById("tinto");
+
+      const loser = document.getElementById("loser");
+      const winner = document.getElementById("winner");
+
+      class Juego {
+        constructor() {
+          this.inicializar = this.inicializar.bind(this);
+          this.inicializar();
+          this.generarSecuencia();
+          setTimeout(this.siguienteNivel, 500);
+        }
+
+        inicializar() {
+          this.siguienteNivel = this.siguienteNivel.bind(this);
+          this.elegirColor = this.elegirColor.bind(this);
+          this.toggleBtnEmpezar();
+          this.nivel = 1;
+          this.colores = {
+            azul,
+            amarillo,
+            rojo,
+            verde,
+          };
+        }
+
+        toggleBtnEmpezar() {
+          if (boton.classList.contains("hide")) {
+            boton.classList.remove("hide");
+          } else {
+            boton.classList.add("hide");
+          }
+        }
+
+        generarSecuencia() {
+          this.secuencia = new Array(ULTIMO_NIVEL)
+            .fill(0)
+            .map((n) => Math.floor(Math.random() * 4));
+        }
+
+        siguienteNivel() {
+          this.subnivel = 0;
+          this.iluminarSecuencia();
+          this.agregarEventosClick();
+        }
+
+        transformarNumeroAColor(numero) {
+          switch (numero) {
+            case 0:
+              return "azul";
+            case 1:
+              return "amarillo";
+            case 2:
+              return "rojo";
+            case 3:
+              return "verde";
+          }
+        }
+
+        transformarColorANumero(color) {
+          switch (color) {
+            case "azul":
+              return 0;
+            case "amarillo":
+              return 1;
+            case "rojo":
+              return 2;
+            case "verde":
+              return 3;
+          }
+        }
+
+        iluminarSecuencia() {
+          for (let i = 0; i < this.nivel; i++) {
+            const color = this.transformarNumeroAColor(this.secuencia[i]);
+            setTimeout(() => this.iluminarColor(color), 1000 * i);
+          }
+        }
+
+        iluminarColor(color) {
+          this.colores[color].classList.add("light");
+          setTimeout(() => this.apagarColor(color), 350);
+        }
+
+        apagarColor(color) {
+          this.colores[color].classList.remove("light");
+        }
+
+        agregarEventosClick() {
+          this.colores.azul.addEventListener("click", this.elegirColor);
+          this.colores.verde.addEventListener("click", this.elegirColor);
+          this.colores.amarillo.addEventListener("click", this.elegirColor);
+          this.colores.rojo.addEventListener("click", this.elegirColor);
+        }
+
+        eliminarEventosClick() {
+          this.colores.azul.removeEventListener("click", this.elegirColor);
+          this.colores.verde.removeEventListener("click", this.elegirColor);
+          this.colores.amarillo.removeEventListener("click", this.elegirColor);
+          this.colores.rojo.removeEventListener("click", this.elegirColor);
+        }
+
+        elegirColor(ev) {
+          const nombreColor = ev.target.dataset.color;
+          const numeroColor = this.transformarColorANumero(nombreColor);
+          this.iluminarColor(nombreColor);
+          if (numeroColor === this.secuencia[this.subnivel]) {
+            this.subnivel++;
+            if (this.subnivel === this.nivel) {
+              this.nivel++;
+              this.eliminarEventosClick();
+              if (this.nivel === ULTIMO_NIVEL + 1) {
+                this.ganador();
+              } else {
+                setTimeout(this.siguienteNivel, 1500);
+              }
+            }
+          } else {
+            this.perdio();
+          }
+        }
+
+        // ganoElJuego() {
+        //   swal("Platzi", "Felicitaciones, ganaste el juego!", "success").then(
+        //     this.inicializar
+        //   );
+        // }
+
+        // perdioElJuego() {
+        //   swal("Platzi", "Lo lamentamos, perdiste :(", "error").then(() => {
+        //     this.eliminarEventosClick();
+        //     this.inicializar();
+        //   });
+        // }
+
+        perdio() {
+          loser.classList.remove("hide");
+          setTimeout(this.startos, 1000);
+        }
+
+        startos() {
+          loser.classList.add("hide");
+          boton.classList.remove("hide");
+        }
+
+        ganador() {
+          console.log("diparo");
+          this.eliminarEventosClick();
+          for (let i = 0; i < 4; i++) {
+            setTimeout(this.iluminarSecuenciaFinal, 1000 * i);
+          }
+          setTimeout(this.ganoJuego, 4000);
+        }
+
+        ganoJuego() {
+          console.log("diparo3");
+          winner.classList.remove("hide");
+
+          setTimeout(this.restart, 1500);
+        }
+
+        restart() {
+          winner.classList.add("hide");
+          boton.classList.remove("hide");
+        }
+
+        iluminarSecuenciaFinal() {
+          console.log("diparo2");
+          this.colores.amarillo.classList.add("light");
+          this.colores.verde.classList.add("light");
+          this.colores.rojo.classList.add("light");
+          this.colores.azul.classList.add("light");
+
+          setTimeout(this.apagarSecuenciaFinal, 500);
+        }
+
+        apagarSecuenciaFinal() {
+          this.colores.amarillo.classList.remove("light");
+          this.colores.rojo.classList.remove("light");
+          this.colores.verde.classList.remove("light");
+          this.colores.azul.classList.remove("light");
+
+          this.iluminarSecuenciaFinal2();
+        }
+
+        iluminarSecuenciaFinal2() {
+          this.colores.box1.classList.add("light");
+          this.colores.box2.classList.add("light");
+          this.colores.box3.classList.add("light");
+          this.colores.box4.classList.add("light");
+          setTimeout(this.apagarSecuenciaFinal2, 500);
+        }
+
+        apagarSecuenciaFinal2() {
+          this.colores.box1.classList.remove("light");
+          this.colores.box2.classList.remove("light");
+          this.colores.box3.classList.remove("light");
+          this.colores.box4.classList.remove("light");
+        }
+      }
+
+      function empezarJuego() {
+        window.juego = new Juego();
+      }
+    </script>
+  </body>
+</html>
